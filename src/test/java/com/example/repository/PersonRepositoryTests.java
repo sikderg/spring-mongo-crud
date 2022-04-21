@@ -31,15 +31,12 @@ public class PersonRepositoryTests {
 	@BeforeEach
 	public void setup() {
 		String str = "abcdefghijklmnopqrstuvwxyz";
-		
+
 		String firstName = "Goutam" + str.charAt(new Random().nextInt(25 - 0 + 1) + 0);
 		String lastName = "Sikder" + str.charAt(new Random().nextInt(25 - 0 + 1) + 0);
-		String bloodType[] = {"A+","A-","B+","B-","AB+","AB-","O+","O-"};
-		Person p = Person.builder().firstName(firstName)
-				.lastName(lastName)
-				.fullName(firstName + " " + lastName)
-				.bloodType(bloodType[new Random().nextInt(7 - 0 + 1) + 0])
-				.isDeleted(Boolean.FALSE).build();
+		String bloodType[] = { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" };
+		Person p = Person.builder().firstName(firstName).lastName(lastName).fullName(firstName + " " + lastName)
+				.bloodType(bloodType[new Random().nextInt(7 - 0 + 1) + 0]).isDeleted(Boolean.FALSE).build();
 		person = personRepository.save(p);
 	}
 
@@ -65,7 +62,7 @@ public class PersonRepositoryTests {
 
 		// when Person Object find from Database
 		List<Person> personDB = personRepository.findByFirstName(this.person.getFirstName());
-		
+
 		// then find Person Object
 		assertThat(personDB.size()).isGreaterThan(0);
 
@@ -79,7 +76,7 @@ public class PersonRepositoryTests {
 
 		// when Person Object find from Database
 		List<Person> personDB = personRepository.findByLastName(this.person.getLastName());
-		
+
 		// then find Person Object
 		assertThat(personDB.size()).isGreaterThan(0);
 
@@ -93,12 +90,13 @@ public class PersonRepositoryTests {
 
 		// when Person Object find from Database
 		List<Person> personDB = personRepository.findPersonByLastName(this.person.getLastName());
-		
+
 		// then find Person Object
 		assertThat(personDB.size()).isGreaterThan(0);
 	}
 
-	// Person Object Find By Query param JSON Object Regex Full Name and input is First Name
+	// Person Object Find By Query param JSON Object Regex Full Name and input is
+	// First Name
 	@DisplayName("Person Object Find By Query param JSON Object Regex Full Name and input is First Name")
 	@Test
 	public void givenPersonObjectWhenQueryParamJSONObjectRegexFullNameThenPersonObjectCheck() {
@@ -106,9 +104,23 @@ public class PersonRepositoryTests {
 
 		// when Person Object find from Database
 		List<Person> personDB = personRepository.findPersonByFullName(this.person.getFirstName());
-		
+
 		// then find Person Object
 		assertThat(personDB.size()).isGreaterThan(0);
+	}
+
+	// Person Object Find By Query param JSON Object Regex Full Name and input is First Name but output only First Name and Full Name
+	@DisplayName("Person Object Find By Query param JSON Object Regex Full Name and input is First Name but output only First Name and Full Name")
+	@Test
+	public void givenPersonObjectWhenQueryParamJSONObjectAndReturnFirstNameAndFullNameRegexFullNameThenPersonObjectCheck() {
+		// given PersonObject
+
+		// when Person Object find from Database
+		List<Person> personDB = personRepository.findCustomPersonByFullName((this.person.getFirstName()));
+		// then find Person Object
+		assertThat(personDB.size()).isGreaterThan(0);
+		assertThat(personDB.get(0).getFirstName()).isNotNull();
+		assertThat(personDB.get(0).getLastName()).isNull();
 	}
 
 }

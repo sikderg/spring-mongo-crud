@@ -52,4 +52,12 @@ public interface PersonRepository extends CrudRepository<Person, String> {
 	@Query("{ fullName : { $regex : ?0 } }")
 	List<Person> findPersonByFullName(String fullName);
 
+	// JSON Query Method by Full Name - a regex driven query with projection firstName fullName
+	/**
+	 * @param fullName
+	 * @return
+	 */
+	@Query(value = "{ fullName : { $regex : ?0 } }", fields = "{firstName:1, fullName:1}")
+	List<Person> findCustomPersonByFullName(String fullName);
+
 }
