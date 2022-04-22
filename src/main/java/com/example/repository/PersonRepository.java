@@ -60,4 +60,12 @@ public interface PersonRepository extends CrudRepository<Person, String> {
 	@Query(value = "{ fullName : { $regex : ?0 } }", fields = "{firstName:1, fullName:1}")
 	List<Person> findCustomPersonByFullName(String fullName);
 
+	// JSON Query Method by bloodType - a regex driven query for count
+	/**
+	 * @param fullName
+	 * @return
+	 */
+	@Query(value = "{'bloodType': {$regex: ?0, $options: 'i'}, 'firstName': ?1}", count = true)
+	int countPersonByBloodTypeAndFullName(String bloodType, String firstName);
+
 }
