@@ -123,4 +123,18 @@ public class PersonRepositoryTests {
 		assertThat(personDB.get(0).getLastName()).isNull();
 	}
 
+	// Person Object Count and input is BloodType and First Name but output is Count
+	@DisplayName("Person Object Count and input is BloodType and First Name but output is Count")
+	@Test
+	public void givenPersonObjectWhenQueryCountPersonThenPersonObjectCheck() {
+		// given PersonObject
+
+		// when Person Object find from Database
+		int personCount = personRepository.countPersonByBloodTypeAndFullName(this.person.getBloodType(),
+				this.person.getFirstName());
+		// then find Person Object
+		assertThat(personCount).isGreaterThan(0);
+
+	}
+
 }
